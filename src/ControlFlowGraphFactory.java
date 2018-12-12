@@ -14,7 +14,6 @@ public class ControlFlowGraphFactory {
         ControlFlowGraph controlFlowGraph = new ControlFlowGraph();
         Map<Integer, ControlFlowNode> nodes = addNodes(controlFlowGraph, controlFlow);
         addEdges(controlFlowGraph, controlFlow, nodes);
-        controlFlowGraph.mergeSimpleInstructionsByStatement();
         return controlFlowGraph;
     }
 
@@ -48,7 +47,8 @@ public class ControlFlowGraphFactory {
                     int nextI = from.getInstruction().getNext(i, offset);
                     ControlFlowNode to = nodes.get(nextI);
                     if (to != null) {
-                        controlFlowGraph.addEdge(from, to);
+                        ControlFlowEdgeType edgeType = ControlFlowEdgeType.getControlFlowEdgeType(from.getInstruction(), i, offset);
+                        controlFlowGraph.addEdge(from, to, edgeType);
                     }
                 }
             }

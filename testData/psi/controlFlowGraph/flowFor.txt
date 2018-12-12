@@ -1,0 +1,15 @@
+0: WriteVariable -> 1.normal
+1: ReadVariable -> 2.normal
+2: ConditionalGoTo -> 3.branch 14.branch
+3: ReadVariable -> 4.normal
+4: ConditionalGoTo -> 5.branch 6.branch
+5: GoTo -> 14.normal
+6: ReadVariable -> 7.normal
+7: ConditionalGoTo -> 8.branch 9.branch
+8: GoTo -> 11.normal
+9: ReadVariable -> 10.normal
+10: WriteVariable -> 11.normal
+11: ReadVariable -> 12.normal
+12: WriteVariable -> 13.normal
+13: GoTo -> 1.normal
+14: Empty ->
