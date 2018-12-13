@@ -1,0 +1,6 @@
+0: WriteVariable ->
+1: ReadVariable ->
+2: ConditionalGoTo ->
+3: WriteVariable -> 2.branch
+4: WriteVariable -> 2.branch
+5: Empty ->

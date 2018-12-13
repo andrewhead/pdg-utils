@@ -1,4 +1,5 @@
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -9,9 +10,10 @@ import java.util.*;
  */
 public class ControlFlowGraph {
 
-    private List<ControlFlowNode> mNodes = new ArrayList<>();
-    private Map<ControlFlowNode, Set<ControlFlowEdge>> mNext = new HashMap<>();
-    private Map<ControlFlowNode, Set<ControlFlowEdge>> mPrevious = new HashMap<>();
+    private final List<ControlFlowNode> mNodes = new ArrayList<>();
+    private final Map<ControlFlowNode, Set<ControlFlowEdge>> mNext = new HashMap<>();
+    private final Map<ControlFlowNode, Set<ControlFlowEdge>> mPrevious = new HashMap<>();
+    private ControlFlowNode mExitNode;
 
     public void addNode(@NotNull ControlFlowNode node) {
         mNodes.add(node);
@@ -31,14 +33,41 @@ public class ControlFlowGraph {
         mPrevious.get(to).add(edge);
     }
 
-    public void removeNode(@NotNull ControlFlowNode node) {
-        mNodes.remove(node);
+    public List<ControlFlowNode> getNodes() {
+        return this.mNodes;
+    }
+
+    @Nullable
+    public ControlFlowNode getExitNode() {
+        return mExitNode;
+    }
+
+    public void setExitNode(@NotNull ControlFlowNode node) {
+        this.mExitNode = node;
+    }
+
+    @NotNull
+    public Set<ControlFlowNode> getSuccessors(@NotNull ControlFlowNode node) {
+        Set<ControlFlowNode> successors = new HashSet<>();
+        Set<ControlFlowEdge> nextEdges = this.mNext.get(node);
+        if (nextEdges != null) {
+            for (ControlFlowEdge edge : nextEdges) {
+                successors.add(edge.getTo());
+            }
+        }
+        return successors;
+    }
+
+    @Nullable
+    public Set<ControlFlowEdge> getEdgesTo(@NotNull ControlFlowNode node) {
+        return this.mPrevious.get(node);
     }
 
     public int size() {
         return this.mNodes.size();
     }
 
+    @Override
     public String toString() {
 
         Map<ControlFlowNode, Integer> nodeIndexes = new HashMap<>();

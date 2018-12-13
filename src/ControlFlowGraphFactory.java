@@ -29,13 +29,14 @@ public class ControlFlowGraphFactory {
             controlFlowGraph.addNode(node);
             nodes.put(i, node);
         }
-        addEndNode(controlFlowGraph, nodes);
+        addExitNode(controlFlowGraph, nodes);
         return nodes;
     }
 
-    private static void addEndNode(ControlFlowGraph controlFlowGraph, Map<Integer, ControlFlowNode> nodes) {
+    private static void addExitNode(ControlFlowGraph controlFlowGraph, Map<Integer, ControlFlowNode> nodes) {
         ControlFlowNode node = new ControlFlowNode(EmptyInstruction.INSTANCE, null);
         controlFlowGraph.addNode(node);
+        controlFlowGraph.setExitNode(node);
         nodes.put(controlFlowGraph.size() - 1, node);
     }
 
